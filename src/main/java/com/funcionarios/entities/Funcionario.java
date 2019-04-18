@@ -2,6 +2,7 @@ package com.funcionarios.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,18 +16,20 @@ public class Funcionario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@Column(unique=true)
 	private String email;
-	private String cpf;
+	private String cpfOuCnpj;
 	
 	public Funcionario() {
 	}
 
-	public Funcionario(Integer id, String nome, String email, String cpf) {
+	public Funcionario(Integer id, String nome, String email, String cpfOuCnpj) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.cpf = cpf;
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
 	public Integer getId() {
@@ -54,11 +57,11 @@ public class Funcionario implements Serializable {
 	}
 
 	public String getCpf() {
-		return cpf;
+		return cpfOuCnpj;
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		this.cpfOuCnpj = cpf;
 	}
 
 	@Override
