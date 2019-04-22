@@ -13,7 +13,6 @@ import com.funcionarios.utils.FuncionarioInsertValidator;
 @Constraint(validatedBy = FuncionarioInsertValidator.class)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-
 public @interface FuncionarioInsert {
 		String message() default "Erro de validação";
 

@@ -8,27 +8,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.funcionarios.entities.enums.TipoFuncionario;
+
 @Entity
 public class Funcionario implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	
-	@Column(unique=true)
+
+	@Column(unique = true)
 	private String email;
+	private Integer tipo;
 	private String cpfOuCnpj;
-	
+
 	public Funcionario() {
 	}
 
-	public Funcionario(Integer id, String nome, String email, String cpfOuCnpj) {
+	public Funcionario(Integer id, String nome, String email, TipoFuncionario tipo, String cpfOuCnpj) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
+		this.tipo = (tipo == null) ? null : tipo.getCod();
 		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
@@ -56,12 +60,20 @@ public class Funcionario implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpf() {
+	public String getCpfOuCnpj() {
 		return cpfOuCnpj;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpfOuCnpj = cpf;
+	public void setCpfOuCnpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
+	}
+
+	public Integer getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.funcionarios.dto.FuncionarioDTO;
+import com.funcionarios.entities.Funcionario;
 import com.funcionarios.entities.enums.TipoFuncionario;
 import com.funcionarios.repositories.FuncionarioRepository;
 import com.funcionarios.resources.exception.FieldMessage;
@@ -35,7 +36,12 @@ public class FuncionarioInsertValidator implements ConstraintValidator<Funcionar
 		if (objDto.getTipo().equals(TipoFuncionario.PESSOAJURIDICA.getCod()) && !ValidatorCpfCnpj.isValidCNPJ(objDto.getCpfOuCnpj())) {
 			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
 		}
-
+		
+		Funcionario aux = funcionarioRepository.findByEmail(objDto.getEmail());
+		if(aux != null) {
+			list.add(new FieldMessage("email", "Email já existente"));
+		}
+		
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())

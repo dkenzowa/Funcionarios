@@ -3,6 +3,7 @@ package com.funcionarios.dto;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -23,9 +24,7 @@ public class FuncionarioDTO implements Serializable {
 	@Length(message="Email inválido")
 	private String email;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
-	private String cpf;
-	
+	@NotNull(message="Preenchimento obrigatório")
 	private Integer tipo;
 	
 	@NotEmpty(message="Preenchimento obrigatório")
@@ -38,7 +37,8 @@ public class FuncionarioDTO implements Serializable {
 		id = obj.getId();
 		nome = obj.getNome();
 		email = obj.getEmail();
-		cpf = obj.getCpf();
+		tipo = obj.getTipo();
+		cpfOuCnpj = obj.getCpfOuCnpj();
 	}
 
 	public Integer getId() {
@@ -63,14 +63,6 @@ public class FuncionarioDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 
 	public Integer getTipo() {

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.funcionarios.dto.FuncionarioDTO;
 import com.funcionarios.entities.Funcionario;
+import com.funcionarios.entities.enums.TipoFuncionario;
 import com.funcionarios.repositories.FuncionarioRepository;
 
 @Service
@@ -54,7 +55,7 @@ public class FuncionarioService implements Serializable {
 	}
 	
 	public Funcionario fromDTO(FuncionarioDTO objDto) {
-		return new Funcionario(objDto.getId(), objDto.getNome(), objDto.getEmail(), objDto.getCpf());
+		return new Funcionario(objDto.getId(), objDto.getNome(), objDto.getEmail(), TipoFuncionario.toEnum(objDto.getTipo()), objDto.getCpfOuCnpj());
 	}
 
 	private void updateData(Funcionario newObj, Funcionario obj) {
