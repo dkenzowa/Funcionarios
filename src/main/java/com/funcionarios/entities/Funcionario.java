@@ -26,7 +26,7 @@ public class Funcionario implements Serializable {
 
 	public Funcionario() {
 	}
-
+	
 	public Funcionario(Integer id, String nome, String email, TipoFuncionario tipo, String cpfOuCnpj) {
 		super();
 		this.id = id;

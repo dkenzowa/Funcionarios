@@ -2,43 +2,44 @@ package com.funcionarios.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.HandlerMapping;
 
-import com.funcionarios.dto.FuncionarioDTO;
+import com.funcionarios.dto.FuncionarioUpdateDTO;
 import com.funcionarios.entities.Funcionario;
-import com.funcionarios.entities.enums.TipoFuncionario;
 import com.funcionarios.repositories.FuncionarioRepository;
 import com.funcionarios.resources.exception.FieldMessage;
-import com.funcionarios.services.utils.FuncionarioInsert;
+import com.funcionarios.services.utils.FuncionarioUpdate;
 
-public class FuncionarioInsertValidator implements ConstraintValidator<FuncionarioInsert, FuncionarioDTO>{
-	
+public class FuncionarioUpdateValidator implements ConstraintValidator<FuncionarioUpdate, FuncionarioUpdateDTO> {
+
+	@Autowired
+	private HttpServletRequest request;
+
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
-	
+
 	@Override
-	public void initialize(FuncionarioInsert ann) {
+	public void initialize(FuncionarioUpdate ann) {
 	}
-	
+
 	@Override
-	public boolean isValid(FuncionarioDTO objDto, ConstraintValidatorContext context) {
+	public boolean isValid(FuncionarioUpdateDTO objDto, ConstraintValidatorContext context) {
+		@SuppressWarnings("unchecked")
+		Map<String, String> map = (Map<String, String>) request
+				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+		Integer uriId = Integer.parseInt(map.get("id"));
 
 		List<FieldMessage> list = new ArrayList<>();
-		
-		if (objDto.getTipo().equals(TipoFuncionario.PESSOAFISICA.getCod()) && !ValidatorCpfCnpj.isValidCPF(objDto.getCpfOuCnpj())) {
-			list.add(new FieldMessage("cpfOuCnpj", "CPF inválido"));
-		}
 
-		if (objDto.getTipo().equals(TipoFuncionario.PESSOAJURIDICA.getCod()) && !ValidatorCpfCnpj.isValidCNPJ(objDto.getCpfOuCnpj())) {
-			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
-		}
-		
 		Funcionario aux = funcionarioRepository.findByEmail(objDto.getEmail());
-		if(aux != null) {
+		if (aux != null && !aux.getId().equals(uriId)) {
 			list.add(new FieldMessage("email", "Email já existente"));
 		}
 		

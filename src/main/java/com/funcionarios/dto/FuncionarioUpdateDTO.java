@@ -7,10 +7,10 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.funcionarios.entities.Funcionario;
-import com.funcionarios.services.utils.FuncionarioInsert;
+import com.funcionarios.services.utils.FuncionarioUpdate;
 
-@FuncionarioInsert
-public class FuncionarioDTO implements Serializable {
+@FuncionarioUpdate
+public class FuncionarioUpdateDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
@@ -23,21 +23,13 @@ public class FuncionarioDTO implements Serializable {
 	@Length(message="Email inválido")
 	private String email;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
-	private Integer tipo;
-	
-	@NotEmpty(message="Preenchimento obrigatório")
-	private String cpfOuCnpj;
-	
-	public FuncionarioDTO() {
+	public FuncionarioUpdateDTO() {
 	}
 	
-	public FuncionarioDTO(Funcionario obj) {
+	public FuncionarioUpdateDTO(Funcionario obj) {
 		id = obj.getId();
 		nome = obj.getNome();
 		email = obj.getEmail();
-		tipo = obj.getTipo();
-		cpfOuCnpj = obj.getCpfOuCnpj();
 	}
 
 	public Integer getId() {
@@ -63,21 +55,5 @@ public class FuncionarioDTO implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Integer getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
-	}
-
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
-	}
-
-	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
-	}
-
+	
 }

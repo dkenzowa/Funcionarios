@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.funcionarios.dto.FuncionarioDTO;
+import com.funcionarios.dto.FuncionarioUpdateDTO;
 import com.funcionarios.entities.Funcionario;
 import com.funcionarios.services.FuncionarioService;
 
@@ -42,7 +43,7 @@ public class FuncionarioResource implements Serializable {
 	}
 	
 	@RequestMapping(value="{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody FuncionarioDTO objDto, @PathVariable Integer id){
+	public ResponseEntity<Void> update(@Valid @RequestBody FuncionarioUpdateDTO objDto, @PathVariable Integer id){
 		Funcionario obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
